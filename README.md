@@ -1,4 +1,4 @@
-# uek223 Blogposts OurSpace
+# OurSpace - Blogposts - üK223
 
 ## Aufgabenübersicht
 
