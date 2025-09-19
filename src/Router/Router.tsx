@@ -28,6 +28,7 @@ const Router = () => {
       {/* Public route to browse blogs without login */}
       <Route path={'/blogposts'} element={<div>Blog List Page - To Be Implemented</div>} />
       <Route path={'/blogpost/:blogpostId'} element={<div>Blog Detail Page - To Be Implemented</div>} />
+      <Route path={'/blogpost/create'} element={<div>Blog Create Page - To Be Implemented</div>} />
 
       <Route
         path={'/users'}
