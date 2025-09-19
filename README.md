@@ -43,7 +43,9 @@ GET      | /blogpost                      | https://localhost:3000/blogposts    
 POST     | /blogpost                      | https://localhost:3000/blogposts/create                                | UC 1 / UC 5 / UC 3
 PUT      | /blogpost/{blogpostId}         | https://localhost:3000/blogposts/edit                                  | UC 2 / UC 5 / UC 3
 DELETE   | /blogpost/{blogpostId}         | Nicht spezifisch definiert, kann von mehreren Orten aufgerufen werden  | UC 2 / UC 5 / UC 3
-[...]
+GET      | -                              | https://localhost:3000/adminoverview                                   | Allgemeine Anforderung Admin Page
+Post     | /user/registerUser             | https://localhost:3000/adminoverview/createuser                        | Allgemeine Anforderung Admin Page
+Put      | /user/{userId}                 | https://localhost:3000/adminoverview/edituser                          | Allgemeine Anforderung Admin Page
 
 
 ## User Journey
@@ -124,7 +126,12 @@ Mit Yup konnten wir alle Felder leicht und zuverlässig validieren.
 Die Postman Tests, welche im Backend Repository zu finden sind, werden natürlich mit Psotman ausgeführt.
 JUnit Tests können im bakcend ausgeführt werden und Cypress hier im Frontend.
 
-[...]
+### Cypress
+Im Frontend kann die Datei zum ausführen der Cypress-Tests unter 
+
+```FE_uek223_Me_Az_Le/cypress/e2e/BlogpostPage/BlogpostPage.cy.ts```
+
+gefunden werden. Mit dem ausführen dieser Datei werden die UC 1 & 2 getestet. Zum laufen bringen dieses Cypress-Tests wird ein laufendes Backend, sowie Frontend benötigt. Zudem muss der Container im Docker laufen.
 
 ---
 
