@@ -8,6 +8,8 @@ import {
   Category as CategoryIcon
 } from '@mui/icons-material';
 import logo from '../../logo1.png';
+import HeroSection from '../organisms/HeroSection/HeroSection';
+import AuthButtonGroup from '../molecules/AuthButtonGroup/AuthButtonGroup';
 
 export default function HomePage() {
     return (
@@ -15,65 +17,13 @@ export default function HomePage() {
         {/* NAVBAR PLACEHOLDER - Add your navigation component here */}
 
         {/* Hero Section */}
-        <Box
-          sx={{
-            background: 'linear-gradient(135deg, #0f0fcf, #00d4ff)',
-            color: '#fff',
-            pt: 8,
-            pb: 12,
-            position: 'relative',
-            overflow: 'hidden'
-          }}
+        <HeroSection
+          title="OurSpace Blog"
+          subtitle="Discover fascinating stories, share your thoughts, and connect with a community of creative minds."
+          logoSrc={logo}
         >
-          <Container maxWidth="lg">
-            <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={6}>
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  sx={{
-                    fontWeight: 'bold',
-                    mb: 3,
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
-                  }}
-                >
-                  OurSpace Blog
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    mb: 4,
-                    opacity: 0.95,
-                    lineHeight: 1.6
-                  }}
-                >
-                    Discover fascinating stories, share your thoughts, and
-                    connect with a community of creative minds.
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Box
-                  component="img"
-                  src={logo}
-                  alt="OurSpace Logo"
-                  sx={{
-                    width: '100%',
-                    maxWidth: '400px',
-                    height: 'auto',
-                    display: 'block',
-                    margin: '0 auto',
-                    filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))',
-                    animation: 'float 3s ease-in-out infinite',
-                    '@keyframes float': {
-                      '0%, 100%': { transform: 'translateY(0px)' },
-                      '50%': { transform: 'translateY(-20px)' }
-                    }
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Container>
-        </Box>
+          <AuthButtonGroup />
+        </HeroSection>
 
         {/* Features Section */}
         <Container maxWidth="lg" sx={{ py: 8 }}>
@@ -176,7 +126,7 @@ export default function HomePage() {
                 Popular Categories
             </Typography>
             <Grid container spacing={2} justifyContent="center">
-              {['Technology', 'Lifestyle', 'Travel', 'Food', 'Business', 'Health', 'Education', 'Entertainment'].map((category) => (
+              {['Technology', 'Lifestyle', 'Travel', 'Food', 'Business', 'Health', 'Education', 'Entertainment', 'Advice', 'Sport', 'History'].map((category) => (
                 <Grid item key={category}>
                   <Chip
                     label={category}
