@@ -58,7 +58,7 @@ export default function LoggedInHomePage() {
     const excerpt = content.length > 150 ? content.substring(0, 150) + '...' : content;
 
     return {
-      id: parseInt(blogpost.id) || Math.random(),
+      id: blogpost.id,
       title: blogpost.title || 'Untitled',
       excerpt: excerpt,
       author: `${blogpost.author?.firstName || ''} ${blogpost.author?.lastName || ''}`.trim() || 'Anonymous',
@@ -86,17 +86,17 @@ export default function LoggedInHomePage() {
   };
 
 
-  const handleLikePost = async (postId: number) => {
+  const handleLikePost = async (postId: string) => {
     console.log('Liked post:', postId);
     // TODO: Implement like functionality when API is available
     alert('Like functionality will be implemented with the likes API');
   };
 
-  const handleCommentPost = (postId: number) => {
+  const handleCommentPost = (postId: string) => {
     navigate(`/blogpost/${postId}`);
   };
 
-  const handleSharePost = (postId: number) => {
+  const handleSharePost = (postId: string) => {
     // Simple share implementation - copy link to clipboard
     const url = `${window.location.origin}/blogpost/${postId}`;
     navigator.clipboard.writeText(url);
