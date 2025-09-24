@@ -7,3 +7,10 @@ export type User = {
   lastName: string;
   roles: Role[];
 };
+
+export type RegisterUser = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
