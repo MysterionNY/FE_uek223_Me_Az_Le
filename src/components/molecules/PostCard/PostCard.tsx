@@ -15,25 +15,15 @@ export interface Post {
   excerpt: string;
   author: string;
   category: string;
-  likes: number;
-  comments: number;
   readTime: string;
   date: string;
 }
 
 interface PostCardProps {
   post: Post;
-  onLike?: (id: string) => void;
-  onComment?: (id: string) => void;
-  onShare?: (id: string) => void;
 }
 
-const PostCard: React.FC<PostCardProps> = ({
-  post,
-  onLike,
-  onComment,
-  onShare
-}) => {
+const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const navigate = useNavigate();
 
   return (

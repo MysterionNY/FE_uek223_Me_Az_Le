@@ -59,8 +59,6 @@ export default function LoggedInHomePage() {
       excerpt: excerpt,
       author: `${blogpost.author?.firstName || ''} ${blogpost.author?.lastName || ''}`.trim() || 'Anonymous',
       category: blogpost.category || 'OTHER',
-      likes: Math.floor(Math.random() * 500), // This would come from a likes table
-      comments: Math.floor(Math.random() * 100), // This would come from comments
       readTime: content.length > 0 ? `${Math.ceil(content.length / 1000)} min` : '1 min',
       date: blogpost.createdDate ? new Date(blogpost.createdDate).toLocaleDateString() : 'Recently'
     };
@@ -82,22 +80,6 @@ export default function LoggedInHomePage() {
   };
 
 
-  const handleLikePost = async (postId: string) => {
-    console.log('Liked post:', postId);
-    // TODO: Implement like functionality when API is available
-    alert('Like functionality will be implemented with the likes API');
-  };
-
-  const handleCommentPost = (postId: string) => {
-    navigate(`/blogpost/${postId}`);
-  };
-
-  const handleSharePost = (postId: string) => {
-    // Simple share implementation - copy link to clipboard
-    const url = `${window.location.origin}/blogpost/${postId}`;
-    navigator.clipboard.writeText(url);
-    alert('Post link copied to clipboard!');
-  };
 
 
   if (loading) {
@@ -154,9 +136,6 @@ export default function LoggedInHomePage() {
                 <PostCard
                   key={post.id}
                   post={post}
-                  onLike={handleLikePost}
-                  onComment={handleCommentPost}
-                  onShare={handleSharePost}
                 />
               ))
             ) : (
