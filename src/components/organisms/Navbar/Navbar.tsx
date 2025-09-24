@@ -5,7 +5,6 @@ import {
     Button,
     Box,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     appBarStyles,
@@ -14,13 +13,14 @@ import {
     redirectButtonStyles,
 } from "./NavbarStyles";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import roles from "../../../config/Roles";
+import activeUserContext from "../../../Contexts/ActiveUserContext";
 
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const { user, logout } = useContext(ActiveUserContext);
-
+    const { user, logout, activeUserHasRole } = useContext(ActiveUserContext);
     const isLoggedIn = !!user;
 
 
@@ -41,9 +41,6 @@ export default function Navbar() {
                 </Typography>
 
                 <Box sx={navbarButtonsBoxStyles}>
-                    <Button component={Link} to="/" sx={redirectButtonStyles}>
-                        Home
-                    </Button>
 
                     {isLoggedIn ? (
                         <Button onClick={handleLogout} sx={redirectButtonStyles}>
@@ -55,14 +52,40 @@ export default function Navbar() {
                         </Button>
                     )}
 
-                    <Button component={Link} to="/users" sx={redirectButtonStyles}>
-                        Users
+                    {isLoggedIn ? (
+                    <Button component={Link} to="/blogpost/create" sx={redirectButtonStyles}>
+                        New Blogpost
                     </Button>
+                    ) : (
+                    <Button component={Link} to="/register" sx={redirectButtonStyles}>
+                        Register
+                    </Button>
+                    )}
+
+
+                    {/*not done yet*/}
+                    {activeUserHasRole(roles.USER) && (
+                        <Button component={Link} to="/blogpost/author" sx={redirectButtonStyles}>
+                            Your Posts
+                        </Button>
+                    )}
+
 
                     <Button component={Link} to="/blogposts" sx={redirectButtonStyles}>
                         Blogposts
                     </Button>
 
+                    {activeUserHasRole(roles.ADMIN) && (
+                        <>
+                            <Button component={Link} to="/admin" sx={redirectButtonStyles}>
+                                Admin Overview
+                            </Button>
+
+                            <Button component={Link} to="/users" sx={redirectButtonStyles}>
+                                Users
+                            </Button>
+                        </>
+                    )}
                 </Box>
             </Toolbar>
         </AppBar>
