@@ -68,7 +68,7 @@ const PrivateRoute: React.FC<Props> = ({
   return (
     //Pagelayout puts the Navigation, Menu etc. around the component
     <div>
-      <Button onClick={activeUserContext.logout}>Logout</Button>
+      <Button onClick={activeUserContext.logout}>Logossut</Button>
       {RouteComponent}
     </div>
   );

@@ -11,6 +11,7 @@ import styles from './SinglePageBlogpostModifyStyles';
 
 import BlogpostService from '../../../Services/BlogpostService';
 import { BlogpostCategory, BlogpostDTO } from '../../../types/models/Blogpost';
+import BlogpostForm, {BlogpostFormValues} from '../../molecules/BlogpostForm/BlogpostForm';
 
 type Mode = 'create' | 'edit';
 type FormValues = Pick<BlogpostDTO, 'title' | 'text' | 'category'>;
@@ -93,52 +94,12 @@ export default function SinglePageBlogpostModify({
           >
             {({ handleSubmit, getFieldProps, touched, errors, isSubmitting, status }) => (
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <FormControl>
-                  <FormLabel htmlFor="title">Title</FormLabel>
-                  <TextField
-                    id="title"
-                    placeholder="Title"
-                    fullWidth
-                    {...getFieldProps('title')}
-                    error={Boolean(touched.title && errors.title)}
-                    helperText={touched.title && errors.title}
-                    inputProps={{ maxLength: 255 }}
-                    sx={{ bgcolor: '#fff', borderRadius: 3 }}
-                  />
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel htmlFor="category">Select topic</FormLabel>
-                  <TextField
-                    id="category"
-                    select
-                    placeholder="select topic"
-                    fullWidth
-                    {...getFieldProps('category')}
-                    error={Boolean(touched.category && errors.category)}
-                    helperText={touched.category && errors.category}
-                    sx={{ bgcolor: '#ececec', borderRadius: 3 }}
-                  >
-                    {categoryOptions.map((c) => (
-                      <MenuItem key={c} value={c}>{c}</MenuItem>
-                    ))}
-                  </TextField>
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel htmlFor="text">Text</FormLabel>
-                  <TextField
-                    id="text"
-                    placeholder="Text"
-                    fullWidth
-                    multiline
-                    minRows={8}
-                    {...getFieldProps('text')}
-                    error={Boolean(touched.text && errors.text)}
-                    helperText={touched.text && errors.text}
-                    sx={{ bgcolor: '#fff', borderRadius: 3 }}
-                  />
-                </FormControl>
+                <BlogpostForm
+                  getFieldProps={getFieldProps as (name: keyof BlogpostFormValues) => any}
+                  touched={touched as any}
+                  errors={errors as any}
+                  categoryOptions={categoryOptions}
+                />
 
                 {status && <Typography variant="body2" color="error">{status}</Typography>}
 
