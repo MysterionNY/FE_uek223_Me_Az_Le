@@ -52,7 +52,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               {post.author}
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {post.date} · {post.readTime} read
+              {post.date}
             </Typography>
           </Box>
           <Chip

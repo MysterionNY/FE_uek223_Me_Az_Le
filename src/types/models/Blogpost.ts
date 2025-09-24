@@ -18,20 +18,20 @@ export enum BlogpostCategory {
 export interface Blogpost {
   id: string;
   title: string;
-  content: string;
+  text: string;
   category: BlogpostCategory;
   author: User;
-  createdDate?: string;
-  updatedDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface BlogpostDTO {
   id?: string;
   title: string;
-  content: string;
+  text: string;
   category: BlogpostCategory;
   authorId?: string;
   author?: User;
-  createdDate?: string;
-  updatedDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

@@ -33,10 +33,10 @@ export default function LoggedInHomePage() {
 
       // Fetch blogposts
       const blogpostsData = await BlogpostService.getAllBlogposts();
-      // Sort by most recent first (assuming createdDate exists)
+      // Sort by most recent first (assuming createdAt exists)
       const sortedBlogposts = blogpostsData.sort((a: Blogpost, b: Blogpost) => {
-        const dateA = a.createdDate ? new Date(a.createdDate).getTime() : 0;
-        const dateB = b.createdDate ? new Date(b.createdDate).getTime() : 0;
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return dateB - dateA; // Most recent first
       });
       setBlogposts(sortedBlogposts);
@@ -50,8 +50,8 @@ export default function LoggedInHomePage() {
 
   // Convert Blogpost to Post format for PostCard
   const convertBlogpostToPost = (blogpost: Blogpost): Post => {
-    const content = blogpost.content || '';
-    const excerpt = content.length > 150 ? content.substring(0, 150) + '...' : content;
+    const text = blogpost.text || '';
+    const excerpt = text.length > 150 ? text.substring(0, 150) + '...' : text;
 
     return {
       id: blogpost.id,
@@ -59,8 +59,8 @@ export default function LoggedInHomePage() {
       excerpt: excerpt,
       author: `${blogpost.author?.firstName || ''} ${blogpost.author?.lastName || ''}`.trim() || 'Anonymous',
       category: blogpost.category || 'OTHER',
-      readTime: content.length > 0 ? `${Math.ceil(content.length / 1000)} min` : '1 min',
-      date: blogpost.createdDate ? new Date(blogpost.createdDate).toLocaleDateString() : 'Recently'
+      readTime: '', // Removed read time calculation
+      date: blogpost.createdAt ? new Date(blogpost.createdAt).toLocaleDateString() : 'Recently'
     };
   };
 
@@ -103,7 +103,7 @@ export default function LoggedInHomePage() {
 
   // Show all recent posts (not filtered by user)
   const recentPosts = blogposts
-    .slice(0, 10) // Show more posts
+    .slice(0, 3) // Show only 3 most recent posts
     .map(convertBlogpostToPost);
 
 
@@ -144,14 +144,14 @@ export default function LoggedInHomePage() {
               </Alert>
             )}
 
-            {blogposts.length > 10 && (
+            {blogposts.length > 3 && (
               <Button
                 fullWidth
                 variant="outlined"
                 sx={{ mt: 2 }}
                 onClick={() => navigate('/blogposts')}
               >
-                Load More Posts
+                View All Posts
               </Button>
             )}
           </Grid>

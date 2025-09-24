@@ -4,6 +4,7 @@ import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage/HomePage';
 import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomePage';
+import BlogpostOverview from '../components/pages/BlogpostOverview/BlogpostOverview';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
@@ -26,7 +27,7 @@ const Router = () => {
       <Route path={'/register'} element={<LoginPage />} /> {/* You may want to create a separate RegisterPage component */}
 
       {/* Public route to browse blogs without login */}
-      <Route path={'/blogposts'} element={<div>Blog List Page - To Be Implemented</div>} />
+      <Route path={'/blogposts'} element={<BlogpostOverview />} />
       <Route path={'/blogpost/:blogpostId'} element={<div>Blog Detail Page - To Be Implemented</div>} />
       <Route path={'/blogpost/create'} element={<div>Blog Create Page - To Be Implemented</div>} />
 
