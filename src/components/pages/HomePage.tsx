@@ -10,6 +10,7 @@ import {
 import logo from '../../logo1.png';
 import HeroSection from '../organisms/HeroSection/HeroSection';
 import AuthButtonGroup from '../molecules/AuthButtonGroup/AuthButtonGroup';
+import { BlogpostCategory } from '../../types/models/Blogpost';
 
 export default function HomePage() {
     return (
@@ -126,10 +127,10 @@ export default function HomePage() {
                 Popular Categories
             </Typography>
             <Grid container spacing={2} justifyContent="center">
-              {['Technology', 'Lifestyle', 'Travel', 'Food', 'Business', 'Health', 'Education', 'Entertainment', 'Advice', 'Sport', 'History'].map((category) => (
+              {Object.values(BlogpostCategory).filter(cat => cat !== 'OTHER').map((category) => (
                 <Grid item key={category}>
                   <Chip
-                    label={category}
+                    label={category.charAt(0) + category.slice(1).toLowerCase()}
                     sx={{
                       fontSize: '1rem',
                       py: 2.5,
