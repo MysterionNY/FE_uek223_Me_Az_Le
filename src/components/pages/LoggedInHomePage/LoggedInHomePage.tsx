@@ -9,6 +9,7 @@ import Navbar from '../../organisms/Navbar/Navbar';
 import BlogpostService from '../../../Services/BlogpostService';
 
 import SecondaryButton from '../../atoms/SecondaryButton/SecondaryButton';
+import OutlinedButton from '../../atoms/OutlinedButton/OutlinedButton';
 import UserActionButtons from '../../molecules/UserActionButtons/UserActionButtons';
 import PostCard, { Post } from '../../molecules/PostCard/PostCard';
 import WelcomeSection from '../../organisms/WelcomeSection/WelcomeSection';
@@ -153,14 +154,13 @@ export default function LoggedInHomePage() {
             )}
 
             {blogposts.length > 3 && (
-              <Button
+              <OutlinedButton
                 fullWidth
-                variant="outlined"
                 sx={{ mt: 2 }}
                 onClick={() => navigate('/blogposts')}
               >
                 View All Posts
-              </Button>
+              </OutlinedButton>
             )}
           </Grid>
 

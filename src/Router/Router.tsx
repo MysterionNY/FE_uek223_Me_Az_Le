@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
+import RegisterPage from '../components/pages/RegisterPage/RegisterPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage/HomePage';
 import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomePage';
@@ -24,7 +25,7 @@ const Router = () => {
       {/* Conditional Home Page - shows different page based on auth status */}
       <Route path={'/'} element={user ? <LoggedInHomePage /> : <HomePage />} />
       <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'/register'} element={<LoginPage />} /> {/* You may want to create a separate RegisterPage component */}
+      <Route path={'/register'} element={<RegisterPage />} />
 
       {/* Public route to browse blogs without login */}
       <Route path={'/blogposts'} element={<BlogpostOverview />} />

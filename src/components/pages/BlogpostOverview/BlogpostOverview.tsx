@@ -18,15 +18,13 @@ import {
   DialogActions,
   Avatar
 } from '@mui/material';
-import {
-  Delete as DeleteIcon,
-  Edit as EditIcon
-} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 import BlogpostService from '../../../Services/BlogpostService';
 import { Blogpost } from '../../../types/models/Blogpost';
 import roles from '../../../config/Roles';
+import DeleteButton from '../../atoms/DeleteButton/DeleteButton';
+import UpdateButton from '../../atoms/UpdateButton/UpdateButton';
 
 const BlogpostOverview: React.FC = () => {
   const navigate = useNavigate();
@@ -197,26 +195,15 @@ const BlogpostOverview: React.FC = () => {
 
                   {/* Admin Actions */}
                   {isAdmin && (
-                    <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        startIcon={<EditIcon />}
+                    <Box sx={{ display: 'flex', gap: 1, mt: 2, justifyContent: 'center' }}>
+                      <UpdateButton
                         onClick={(e) => handleEdit(e, post.id)}
-                        sx={{ flexGrow: 1 }}
-                      >
-                        Update
-                      </Button>
-                      <Button
                         size="small"
-                        variant="outlined"
-                        color="error"
-                        startIcon={<DeleteIcon />}
+                      />
+                      <DeleteButton
                         onClick={(e) => handleDeleteClick(e, post.id)}
-                        sx={{ flexGrow: 1 }}
-                      >
-                        Delete
-                      </Button>
+                        size="small"
+                      />
                     </Box>
                   )}
                 </CardContent>
