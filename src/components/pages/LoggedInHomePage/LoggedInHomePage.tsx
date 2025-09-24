@@ -118,7 +118,13 @@ export default function LoggedInHomePage() {
       <WelcomeSection
         userName={user?.firstName}
       >
-        <UserActionButtons onLogout={logout} />
+        <UserActionButtons
+            onLogout={() => {
+              logout();
+              navigate("/");
+            }}
+        />
+
       </WelcomeSection>
 
       {/* Main Content */}

@@ -42,11 +42,10 @@ const PrivateRoute: React.FC<Props> = ({
   };
   /**
    * If the user is not logged in call activeUserContext.logout, which destroys
-   * all locally saved user data and redirects to /login.
+   * all locally saved user data and redirects to /.
    */
   if (!isLoggedIn()) {
-    activeUserContext.logout();
-    return <Navigate to='/login' replace={true} />;
+    return <Navigate to='/' replace={true} />;
   }
   /**
    * Check if the active user has at least 1 of the needed authorities.
