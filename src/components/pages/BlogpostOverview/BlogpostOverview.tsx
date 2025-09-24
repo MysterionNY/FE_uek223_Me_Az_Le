@@ -28,15 +28,13 @@ import UpdateButton from '../../atoms/UpdateButton/UpdateButton';
 
 const BlogpostOverview: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useContext(ActiveUserContext);
+  const { activeUserHasRole } = useContext(ActiveUserContext);
   const [blogposts, setBlogposts] = useState<Blogpost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState<string | null>(null);
 
-  // Check if user is admin (only if user is logged in)
-  const isAdmin = user && user.roles?.some(role => role.name === roles.ADMIN);
 
   useEffect(() => {
     fetchBlogposts();
@@ -194,7 +192,7 @@ const BlogpostOverview: React.FC = () => {
                   </Box>
 
                   {/* Admin Actions */}
-                  {isAdmin && (
+                  {activeUserHasRole(roles.ADMIN) && (
                     <Box sx={{ display: 'flex', gap: 1, mt: 2, justifyContent: 'center' }}>
                       <UpdateButton
                         onClick={(e) => handleEdit(e, post.id)}
