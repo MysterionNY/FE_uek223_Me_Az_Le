@@ -1,11 +1,12 @@
-import { useContext } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {useContext} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import RegisterPage from '../components/pages/RegisterPage/RegisterPage';
 import PrivateRoute from './PrivateRoute';
 import HomePage from '../components/pages/HomePage/HomePage';
 import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomePage';
 import BlogpostOverview from '../components/pages/BlogpostOverview/BlogpostOverview';
+import SinglePageBlogpostModify from '../components/pages/BlogpostOverview/SinglePageBlogpostModify';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
@@ -29,8 +30,6 @@ const Router = () => {
 
       {/* Public route to browse blogs without login */}
       <Route path={'/blogposts'} element={<BlogpostOverview />} />
-      <Route path={'/blogpost/:blogpostId'} element={<div>Blog Detail Page - To Be Implemented</div>} />
-      <Route path={'/blogpost/create'} element={<div>Blog Create Page - To Be Implemented</div>} />
 
       <Route
         path={'/users'}
@@ -40,7 +39,7 @@ const Router = () => {
         path='/useredit'
         element={
           <PrivateRoute
-            requiredAuths={[authorities.USER_DEACTIVATE, authorities.USER_CREATE]}
+            requiredAuths={[authorities.USER_MODIFY]}
             element={<UserPage />}
           ></PrivateRoute>
         }
@@ -49,12 +48,27 @@ const Router = () => {
         path='/useredit/:userId'
         element={
           <PrivateRoute
-            requiredAuths={[authorities.USER_READ]}
+            requiredAuths={[authorities.USER_MODIFY]}
             element={<UserPage />}
           ></PrivateRoute>
         }
       />
-
+      <Route
+        path={'/blogpost/create'} element={
+        <PrivateRoute
+          requiredAuths={[authorities.BLOGPOST_CREATE]}
+          element={<SinglePageBlogpostModify />}
+        ></PrivateRoute>
+      }
+      />
+      <Route
+        path={'/blogpost/edit/:blogpostId'} element={
+        <PrivateRoute
+          requiredAuths={[authorities.BLOGPOST_UPDATE]}
+          element={<SinglePageBlogpostModify />}
+          ></PrivateRoute>
+      }
+        />
       <Route path='*' element={<div>Not Found</div>} />
     </Routes>
   );
