@@ -1,5 +1,5 @@
 import api from '../config/Api';
-import { User } from '../types/models/User.model';
+import {RegisterUser, User} from '../types/models/User.model';
 
 const UserService = {
   getUser: async (userID: string): Promise<User> => {
@@ -15,6 +15,10 @@ const UserService = {
     return api.post('/user/registerUser', user).then((res) => {
       return res.data;
     });
+  },
+
+  registerUser: (user: RegisterUser) => {
+    return api.post(`/user/register`, user);
   },
 
   getAllUsers: () => {
