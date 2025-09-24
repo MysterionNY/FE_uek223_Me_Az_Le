@@ -11,13 +11,14 @@ import logo from '../../../logo1.png';
 import HeroSection from '../../organisms/HeroSection/HeroSection';
 import AuthButtonGroup from '../../molecules/AuthButtonGroup/AuthButtonGroup';
 import { BlogpostCategory } from '../../../types/models/Blogpost';
+import Navbar from "../../organisms/Navbar/Navbar";
 
 export default function HomePage() {
     return (
       <>
         {/* NAVBAR PLACEHOLDER - Add your navigation component here */}
 
-        {/* Hero Section */}
+        <Navbar />
         <HeroSection
           title="OurSpace Blog"
           subtitle="Discover fascinating stories, share your thoughts, and connect with a community of creative minds."
