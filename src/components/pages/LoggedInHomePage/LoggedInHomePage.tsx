@@ -4,24 +4,20 @@ import { AutoAwesome as SparkleIcon, Edit as EditIcon } from '@mui/icons-materia
 import { useNavigate } from 'react-router-dom';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 
-// Services
 import BlogpostService from '../../../Services/BlogpostService';
 
-// Atomic components
 import SecondaryButton from '../../atoms/SecondaryButton/SecondaryButton';
 import UserActionButtons from '../../molecules/UserActionButtons/UserActionButtons';
 import PostCard, { Post } from '../../molecules/PostCard/PostCard';
 import WelcomeSection from '../../organisms/WelcomeSection/WelcomeSection';
 import TrendingTopics from '../../organisms/TrendingTopics/TrendingTopics';
 
-// Types
 import { Blogpost } from '../../../types/models/Blogpost';
 
 export default function LoggedInHomePage() {
   const navigate = useNavigate();
   const { user, logout } = useContext(ActiveUserContext);
 
-  // State for real data
   const [blogposts, setBlogposts] = useState<Blogpost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
