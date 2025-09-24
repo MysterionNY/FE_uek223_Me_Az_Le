@@ -13,19 +13,19 @@ import {
     navbarButtonsBoxStyles,
     redirectButtonStyles,
 } from "./NavbarStyles";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
+import { useContext } from "react";
+
 
 export default function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const { user, logout } = useContext(ActiveUserContext);
 
-    useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        setIsLoggedIn(!!token);
-    }, []);
+    const isLoggedIn = !!user;
+
 
     const handleLogout = () => {
-        localStorage.removeItem("accessToken");
-        setIsLoggedIn(false);
+        logout();
         navigate("/");
     };
 
