@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from '../components/pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute';
-import HomePage from '../components/pages/HomePage';
+import HomePage from '../components/pages/HomePage/HomePage';
 import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomePage';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';

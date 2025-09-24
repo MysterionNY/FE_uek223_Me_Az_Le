@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import styles from './StatCardStyles';
 
 interface StatCardProps {
   value: string | number;
@@ -9,10 +10,10 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ value, label }) => {
   return (
     <Box>
-      <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'white' }}>
+      <Typography variant="h4" sx={styles.valueText}>
         {value}
       </Typography>
-      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
+      <Typography variant="body2" sx={styles.labelText}>
         {label}
       </Typography>
     </Box>
