@@ -10,9 +10,31 @@ Alle User, inklusive Gäste, sollen Blogposts lesen können – mit Pagination u
 Das System muss also auch dafür sorgen, dass nur der Autor oder ein Admin Änderungen an einem Post durchführen darf.
 Ebenfalls gibt es die Möglichkeit, alle Blogposts eines Users ansehen zu können.
 
-## Durchlauf
+---
 
-In der IDE:
+## Inhaltsverzeichnis
+
+* [Durchlauf (Applikation Start)](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#durchlauf-applikation-start)
+* [Login Daten](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#login-daten)
+* [Use Cases](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#use-cases)
+* [Frontend-URL](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#frontend-url)
+* [User Journey](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#user-journey)
+* [Projekt](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#projekt)
+* [Struktur](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#struktur)
+* [Services](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#services)
+* [Validierung](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#validierung)
+* [Tests](https://github.com/MysterionNY/FE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#tests)
+
+---
+
+## Durchlauf (Applikation Start)
+
+**Zu Beginn**: die Erstellung des Docker-Containers und das Starten des Backends.
+(siehe [Backend-README](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main))
+
+
+
+In Webstorm, sobald der Docker-Container gestartet wurde und das Backend läuft:
 
 ```bash
 yarn start
@@ -29,6 +51,15 @@ Homepage:
 
 Login:
 `http://localhost:3000/login`
+
+---
+
+## Login Daten
+Email              | Passwort              | Rolle | 
+----------------   | --------------------- | ----  | 
+admin@example.com  | 1234                  | Admin |  
+user@example.com   | 1234                  | User  |  
+user2@example.com  | 1234                  | User  |  
 
 ---
 
