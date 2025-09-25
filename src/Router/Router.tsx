@@ -12,6 +12,7 @@ import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
 import ActiveUserContext from '../Contexts/ActiveUserContext';
+import PageLayout from "../components/other/PageLayout/PageLayout";
 
 /**
  * Router component renders a route switch with all available pages
@@ -24,13 +25,12 @@ const Router = () => {
 
   return (
     <Routes>
-      {/* Conditional Home Page - shows different page based on auth status */}
-      <Route path={'/'} element={user ? <LoggedInHomePage /> : <HomePage />} />
-      <Route path={'/login'} element={<LoginPage />} />
-      <Route path={'/register'} element={<RegisterPage />} />
+      <Route path='/' element={<PageLayout>{user ? <LoggedInHomePage /> : <HomePage />}</PageLayout>} />
 
       {/* Public route to browse blogs without login */}
-      <Route path={'/blogposts'} element={<BlogpostOverview />} />
+      <Route path={'/blogposts'} element={<PageLayout><BlogpostOverview /></PageLayout>} />
+      <Route path='/login' element={<PageLayout><LoginPage /></PageLayout>} />
+      <Route path='/register' element={<PageLayout><RegisterPage /></PageLayout>} />
 
       <Route
         path={'/users'}
@@ -78,7 +78,7 @@ const Router = () => {
           ></PrivateRoute>
       }
         />
-      <Route path='*' element={<div>Not Found</div>} />
+      <Route path='*' element={<PageLayout><div>Not Found</div></PageLayout>} />
     </Routes>
   );
 };

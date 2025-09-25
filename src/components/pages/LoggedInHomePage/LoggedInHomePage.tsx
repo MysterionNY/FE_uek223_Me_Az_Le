@@ -3,6 +3,8 @@ import { Container, Typography, Grid, Box, Button, Alert, CircularProgress } fro
 import { AutoAwesome as SparkleIcon, Edit as EditIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
+import Navbar from '../../organisms/Navbar/Navbar';
+
 
 import BlogpostService from '../../../Services/BlogpostService';
 
@@ -107,7 +109,13 @@ export default function LoggedInHomePage() {
       <WelcomeSection
         userName={user?.firstName}
       >
-        <UserActionButtons onLogout={logout} />
+        <UserActionButtons
+            onLogout={() => {
+              logout();
+              navigate("/");
+            }}
+        />
+
       </WelcomeSection>
 
       {/* Main Content */}
