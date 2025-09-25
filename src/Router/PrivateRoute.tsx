@@ -5,6 +5,8 @@ import ActiveUserContext from '../Contexts/ActiveUserContext';
 import AuthorityService from '../Services/AuthorityService';
 import { Button } from '@mui/material';
 import authorities from '../config/Authorities';
+import PageLayout from "../components/other/PageLayout/PageLayout"; // or wherever it lives
+
 
 interface Props {
   element: React.ReactElement;
@@ -64,12 +66,11 @@ const PrivateRoute: React.FC<Props> = ({
   }
 
   // All checks passed
-  return (
-    //Pagelayout puts the Navigation, Menu etc. around the component
-    <div>
-      <Button onClick={activeUserContext.logout}>Logout</Button>
-      {RouteComponent}
-    </div>
-  );
+    return (
+        <PageLayout>
+            {RouteComponent}
+        </PageLayout>
+    );
+
 };
 export default PrivateRoute;
