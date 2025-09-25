@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-const NAVBAR_HEIGHT = 64; // adjust this if your Navbar height is different
+const NAVBAR_HEIGHT = 64;
 
 const usePageLayoutStyles = makeStyles(() => ({
     contentPusher: {

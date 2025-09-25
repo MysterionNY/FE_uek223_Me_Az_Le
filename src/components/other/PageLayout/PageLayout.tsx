@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import Navbar from "../../organisms/Navbar/Navbar";
-import usePageLayoutStyles from "./PageLayoutStyles"; // ✅ correct import
+import usePageLayoutStyles from "./PageLayoutStyles";
 
 /**
  * PageLayoutProps defines all props on the PageLayout component
