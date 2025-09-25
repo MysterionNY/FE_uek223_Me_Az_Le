@@ -26,6 +26,7 @@ export type ActiveUserContextType = {
   setActiveUser: (user: User) => void;
   loadActiveUser: () => void;
   checkRole: (roleToCheck: keyof typeof roles) => boolean;
+  activeUserHasRole: (roleToCheck: keyof typeof roles) => boolean;
 };
 
 /**
@@ -46,6 +47,7 @@ const defaultContextValue: ActiveUserContextType = {
   setActiveUser: noContextProviderFound,
   loadActiveUser: noContextProviderFound,
   checkRole: noContextProviderFound,
+  activeUserHasRole: noContextProviderFound,
 };
 
 /**
@@ -199,6 +201,7 @@ export const ActiveUserContextProvider = ({
           logout,
           loadActiveUser,
           checkRole: activeUserHasRole,
+          activeUserHasRole
         }}
       >
         {children}

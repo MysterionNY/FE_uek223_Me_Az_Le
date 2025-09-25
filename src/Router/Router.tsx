@@ -7,6 +7,7 @@ import HomePage from '../components/pages/HomePage/HomePage';
 import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomePage';
 import BlogpostOverview from '../components/pages/BlogpostOverview/BlogpostOverview';
 import SinglePageBlogpostModify from '../components/pages/BlogpostOverview/SinglePageBlogpostModify';
+import SinglePageBlogpost from '../components/pages/BlogpostOverview/SinglePageBlogpost';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
@@ -52,6 +53,14 @@ const Router = () => {
             element={<UserPage />}
           ></PrivateRoute>
         }
+      />
+      <Route
+        path={'/blogpost/:blogpostId'} element={
+        <PrivateRoute
+          requiredAuths={[]}
+          element={<SinglePageBlogpost />}
+        ></PrivateRoute>
+      }
       />
       <Route
         path={'/blogpost/create'} element={
