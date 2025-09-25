@@ -10,6 +10,7 @@ import SinglePageBlogpostModify from '../components/pages/BlogpostOverview/Singl
 import SinglePageBlogpost from '../components/pages/BlogpostOverview/SinglePageBlogpost';
 import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
+import AdminDashboard from '../components/pages/AdminDashboard/AdminDashboard';
 import authorities from '../config/Authorities';
 import ActiveUserContext from '../Contexts/ActiveUserContext';
 import PageLayout from "../components/other/PageLayout/PageLayout";
@@ -35,6 +36,15 @@ const Router = () => {
       <Route path='/register' element={<PageLayout><RegisterPage /></PageLayout>} />
       <Route path='/blogposts/author/:authorId' element={<PageLayout><BlogpostsByAuthor /></PageLayout>} />
 
+      <Route
+        path={'/admin'}
+        element={
+          <PrivateRoute
+            requiredAuths={[authorities.USER_MODIFY]}
+            element={<PageLayout><AdminDashboard /></PageLayout>}
+          />
+        }
+      />
       <Route
         path={'/users'}
         element={<PrivateRoute requiredAuths={[]} element={<UserTable />} />}

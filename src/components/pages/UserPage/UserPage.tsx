@@ -16,24 +16,45 @@ const UserPage = () => {
   });
 
   useEffect(() => {
-    return () => {
-      if (userId) {
-        UserService.getUser(userId).then((res) => {
-          return setUser(res);
+    if (userId) {
+      console.log('Fetching user with ID:', userId);
+      UserService.getUser(userId)
+        .then((res) => {
+          console.log('User fetched successfully:', res);
+          setUser(res);
+        })
+        .catch((error) => {
+          console.error('Error fetching user:', error);
+          console.error('Error response:', error.response);
+          alert(`Failed to fetch user: ${error.response?.data?.message || error.message}`);
         });
-      }
-    };
+    }
   }, [userId]);
 
   const submitActionHandler = (values: User) => {
+    console.log('Submitting user data:', values);
     if (userId !== undefined) {
-      UserService.updateUser(values).then(() => {
-        navigate('../users');
-      });
+      UserService.updateUser(values)
+        .then(() => {
+          console.log('User updated successfully');
+          navigate('/admin');
+        })
+        .catch((error) => {
+          console.error('Error updating user:', error);
+          console.error('Error response:', error.response);
+          alert(`Failed to update user: ${error.response?.data?.message || error.message}`);
+        });
     } else {
-      UserService.addUser(values).then(() => {
-        navigate('/users');
-      });
+      UserService.addUser(values)
+        .then(() => {
+          console.log('User added successfully');
+          navigate('/admin');
+        })
+        .catch((error) => {
+          console.error('Error adding user:', error);
+          console.error('Error response:', error.response);
+          alert(`Failed to add user: ${error.response?.data?.message || error.message}`);
+        });
     }
   };
 
