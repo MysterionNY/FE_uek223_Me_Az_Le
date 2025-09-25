@@ -36,21 +36,16 @@ export default function Navbar() {
     return (
         <AppBar sx={appBarStyles}>
             <Toolbar>
-                <Typography sx={titleTextStyles}>
-                    Ourspace
+                <Typography
+                  component={Link}
+                  to="/"
+                  sx={{ ...titleTextStyles, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                >
+                    OurSpace
                 </Typography>
 
                 <Box sx={navbarButtonsBoxStyles}>
 
-                    {isLoggedIn ? (
-                        <Button onClick={handleLogout} sx={redirectButtonStyles}>
-                            Log Out
-                        </Button>
-                    ) : (
-                        <Button onClick={handleLogin} sx={redirectButtonStyles}>
-                            Log In
-                        </Button>
-                    )}
 
                     {isLoggedIn ? (
                     <Button component={Link} to="/blogpost/create" sx={redirectButtonStyles}>
@@ -62,14 +57,15 @@ export default function Navbar() {
                     </Button>
                     )}
 
-
-                    {/*not done yet*/}
-                    {activeUserHasRole(roles.USER) && (
-                        <Button component={Link} to="/blogpost/author" sx={redirectButtonStyles}>
-                            Your Posts
-                        </Button>
+                    {activeUserHasRole(roles.USER) && user?.id && (
+                      <Button
+                        component={Link}
+                        to={`/blogpost/author/${user.id}`}
+                        sx={redirectButtonStyles}
+                      >
+                          Your Posts
+                      </Button>
                     )}
-
 
                     <Button component={Link} to="/blogposts" sx={redirectButtonStyles}>
                         Blogposts
@@ -85,6 +81,16 @@ export default function Navbar() {
                                 Users
                             </Button>
                         </>
+                    )}
+
+                    {isLoggedIn ? (
+                      <Button onClick={handleLogout} sx={redirectButtonStyles}>
+                          Log Out
+                      </Button>
+                    ) : (
+                      <Button onClick={handleLogin} sx={redirectButtonStyles}>
+                          Log In
+                      </Button>
                     )}
                 </Box>
             </Toolbar>

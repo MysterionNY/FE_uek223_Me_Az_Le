@@ -22,7 +22,6 @@ export interface Blogpost {
   category: BlogpostCategory;
   author: User;
   createdAt?: string;
-  updatedAt?: string;
 }
 
 export interface BlogpostDTO {
@@ -33,5 +32,4 @@ export interface BlogpostDTO {
   authorId?: string;
   author?: User;
   createdAt?: string;
-  updatedAt?: string;
 }

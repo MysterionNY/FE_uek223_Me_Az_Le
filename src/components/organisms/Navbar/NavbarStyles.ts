@@ -11,7 +11,7 @@ export const titleTextStyles: SxProps<Theme> = {
     lineHeight: 1.6,
     letterSpacing: "0.0075em",
     flexGrow: 1,
-    color: "black",
+    color: "white",
     paddingLeft: "350px",
 };
 
@@ -22,7 +22,7 @@ export const navbarButtonsBoxStyles: SxProps<Theme> = {
 
 export const redirectButtonStyles: SxProps<Theme> = {
     backgroundColor: "rgba(50, 205, 50, 0)",
-    color: "black",
+    color: "white",
     zIndex: 9999,
     position: "relative",
     "&:hover": {

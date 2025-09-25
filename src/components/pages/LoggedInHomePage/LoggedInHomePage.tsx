@@ -51,7 +51,6 @@ export default function LoggedInHomePage() {
     }
   };
 
-  // Convert Blogpost to Post format for PostCard
   const convertBlogpostToPost = (blogpost: Blogpost): Post => {
     const text = blogpost.text || '';
     const excerpt = text.length > 150 ? text.substring(0, 150) + '...' : text;
@@ -62,12 +61,11 @@ export default function LoggedInHomePage() {
       excerpt: excerpt,
       author: `${blogpost.author?.firstName || ''} ${blogpost.author?.lastName || ''}`.trim() || 'Anonymous',
       category: blogpost.category || 'OTHER',
-      readTime: '', // Removed read time calculation
+      readTime: '',
       date: blogpost.createdAt ? new Date(blogpost.createdAt).toLocaleDateString() : 'Recently'
     };
   };
 
-  // Calculate trending topics from actual blogposts
   const getTrendingTopics = () => {
     const categoryCount: { [key: string]: number } = {};
     blogposts.forEach(post => {
@@ -81,9 +79,6 @@ export default function LoggedInHomePage() {
       .sort((a, b) => b.posts - a.posts)
       .slice(0, 5);
   };
-
-
-
 
   if (loading) {
     return (
@@ -104,16 +99,13 @@ export default function LoggedInHomePage() {
     );
   }
 
-  // Show all recent posts (not filtered by user)
   const recentPosts = blogposts
-    .slice(0, 3) // Show only 3 most recent posts
+    .slice(0, 3)
     .map(convertBlogpostToPost);
 
 
   return (
     <>
-
-      {/* Welcome Section without Stats */}
       <WelcomeSection
         userName={user?.firstName}
       >

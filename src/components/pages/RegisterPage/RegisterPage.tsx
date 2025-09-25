@@ -28,7 +28,7 @@ const RegisterSchema = Yup.object({
   firstName: Yup.string().trim().min(2, 'At least 2 letter').max(20).required('You have to enter a first name'),
   lastName: Yup.string().trim().min(2, 'At least 2 letter').max(50).required('You have to enter a last name'),
   email: Yup.string().email('Invalid email').max(200).required('You have to enter an email'),
-  password: Yup.string().min(5, 'At least 5 signs').max(200).required('You have to enter a password'),
+  password: Yup.string().min(4, 'At least 4 signs').max(200).required('You have to enter a password'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords do not match')
     .required('Please enter the same password'),

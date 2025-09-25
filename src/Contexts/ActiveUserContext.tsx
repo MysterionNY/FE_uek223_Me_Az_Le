@@ -26,7 +26,8 @@ export type ActiveUserContextType = {
   setActiveUser: (user: User) => void;
   loadActiveUser: () => void;
   checkRole: (roleToCheck: keyof typeof roles) => boolean;
-  activeUserHasRole: (roleToCheck: keyof typeof roles) => boolean;};
+  activeUserHasRole: (roleToCheck: keyof typeof roles) => boolean;
+};
 
 /**
  * noContextProviderFound is a method that throws an error and is used
