@@ -23,8 +23,7 @@ import {
   Select,
   MenuItem,
   InputAdornment,
-  Pagination,
-  Stack
+  Pagination
 } from '@mui/material';
 import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -48,7 +47,7 @@ const BlogpostOverview: React.FC = () => {
   const [postToDelete, setPostToDelete] = useState<string | null>(null);
 
   // Get category from URL params
-  const categoryFromUrl = searchParams.get('category') || 'ALL';
+  const categoryFromUrl = searchParams.get('category') ?? 'ALL';
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
@@ -75,7 +74,7 @@ const BlogpostOverview: React.FC = () => {
       setAllBlogposts(data);
     } catch (err: any) {
       console.error('Error fetching blogposts:', err);
-      setError(err.response?.data?.message || 'Failed to load blogposts');
+      setError(err.response?.data?.message ?? 'Failed to load blogposts');
     } finally {
       setLoading(false);
     }
@@ -133,7 +132,7 @@ const BlogpostOverview: React.FC = () => {
         setPostToDelete(null);
       } catch (err: any) {
         console.error('Error deleting blogpost:', err);
-        alert(err.response?.data?.message || 'Failed to delete blogpost');
+        alert(err.response?.data?.message ?? 'Failed to delete blogpost');
       }
     }
   };

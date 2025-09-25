@@ -8,7 +8,6 @@ import LoggedInHomePage from '../components/pages/LoggedInHomePage/LoggedInHomeP
 import BlogpostOverview from '../components/pages/BlogpostOverview/BlogpostOverview';
 import SinglePageBlogpostModify from '../components/pages/BlogpostOverview/SinglePageBlogpostModify';
 import SinglePageBlogpost from '../components/pages/BlogpostOverview/SinglePageBlogpost';
-import UserTable from '../components/pages/UserPage/UserTable';
 import UserPage from '../components/pages/UserPage/UserPage';
 import AdminDashboard from '../components/pages/AdminDashboard/AdminDashboard';
 import authorities from '../config/Authorities';
@@ -46,11 +45,7 @@ const Router = () => {
         }
       />
       <Route
-        path={'/users'}
-        element={<PrivateRoute requiredAuths={[]} element={<UserTable />} />}
-      />
-      <Route
-        path='/useredit'
+        path='/usercreate'
         element={
           <PrivateRoute
             requiredAuths={[authorities.USER_MODIFY]}

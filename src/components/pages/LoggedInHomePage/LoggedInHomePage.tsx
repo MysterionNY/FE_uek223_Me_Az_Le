@@ -3,11 +3,7 @@ import { Container, Typography, Grid, Box, Button, Alert, CircularProgress } fro
 import { AutoAwesome as SparkleIcon, Edit as EditIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
-import Navbar from '../../organisms/Navbar/Navbar';
-
-
 import BlogpostService from '../../../Services/BlogpostService';
-
 import SecondaryButton from '../../atoms/SecondaryButton/SecondaryButton';
 import OutlinedButton from '../../atoms/OutlinedButton/OutlinedButton';
 import UserActionButtons from '../../molecules/UserActionButtons/UserActionButtons';
@@ -45,7 +41,7 @@ export default function LoggedInHomePage() {
       setBlogposts(sortedBlogposts);
     } catch (err: any) {
       console.error('Error fetching data:', err);
-      setError(err.response?.data?.message || 'Failed to load data');
+      setError(err.response?.data?.message ?? 'Failed to load data');
     } finally {
       setLoading(false);
     }

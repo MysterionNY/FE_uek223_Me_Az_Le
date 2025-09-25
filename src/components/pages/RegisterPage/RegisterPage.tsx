@@ -82,9 +82,9 @@ export default function RegisterPage() {
                 resetForm();
               } catch (err: any) {
                 const msg =
-                  err?.response?.data?.message ||
-                  err?.response?.data?.error ||
-                  err?.message ||
+                  err?.response?.data?.message ??
+                  err?.response?.data?.error ??
+                  err?.message ??
                   'Register failed.';
                 setStatus({ error: msg });
               } finally {
