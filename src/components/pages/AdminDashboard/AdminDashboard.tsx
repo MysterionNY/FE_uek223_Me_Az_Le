@@ -44,8 +44,7 @@ import {
   AdminPanelSettings as AdminIcon,
   Person as PersonIcon,
   Groups as GroupsIcon,
-  Clear as ClearIcon,
-  FilterList as FilterIcon
+  Clear as ClearIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import UserService from '../../../Services/UserService';
@@ -116,10 +115,10 @@ const AdminDashboard: React.FC = () => {
       setError(null);
       const response = await UserService.getAllUsers();
       console.log('Users response:', response); // Debug log
-      setUsers(response.data || []);
+      setUsers(response.data ?? []);
     } catch (err: any) {
       console.error('Error fetching users:', err);
-      setError(err.response?.data?.message || 'Failed to load users');
+      setError(err.response?.data?.message ?? 'Failed to load users');
     } finally {
       setLoading(false);
     }
@@ -135,12 +134,11 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleEdit = (userId: string) => {
-    console.log('Edit clicked for user:', userId);
     navigate(`/useredit/${userId}`);
   };
 
   const handleAdd = () => {
-    navigate('/useredit');
+    navigate('/usercreate');
   };
 
   const handleDeleteClick = (userId: string) => {
@@ -163,7 +161,7 @@ const AdminDashboard: React.FC = () => {
         console.error('Error deleting user:', err);
         const errorMessage = err.response?.status === 403
           ? 'You do not have permission to delete users (requires USER_DELETE authority)'
-          : err.response?.data?.message || 'Failed to delete user';
+          : err.response?.data?.message ?? 'Failed to delete user';
         alert(errorMessage);
       }
     }

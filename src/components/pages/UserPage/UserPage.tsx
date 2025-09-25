@@ -26,7 +26,7 @@ const UserPage = () => {
         .catch((error) => {
           console.error('Error fetching user:', error);
           console.error('Error response:', error.response);
-          alert(`Failed to fetch user: ${error.response?.data?.message || error.message}`);
+          alert(`Failed to fetch user: ${error.response?.data?.message ?? error.message}`);
         });
     }
   }, [userId]);
@@ -42,7 +42,7 @@ const UserPage = () => {
         .catch((error) => {
           console.error('Error updating user:', error);
           console.error('Error response:', error.response);
-          alert(`Failed to update user: ${error.response?.data?.message || error.message}`);
+          alert(`Failed to update user: ${error.response?.data?.message ?? error.message}`);
         });
     } else {
       UserService.addUser(values)
@@ -53,7 +53,7 @@ const UserPage = () => {
         .catch((error) => {
           console.error('Error adding user:', error);
           console.error('Error response:', error.response);
-          alert(`Failed to add user: ${error.response?.data?.message || error.message}`);
+          alert(`Failed to add user: ${error.response?.data?.message ?? error.message}`);
         });
     }
   };

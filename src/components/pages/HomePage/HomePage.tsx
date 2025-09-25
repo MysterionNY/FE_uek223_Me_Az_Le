@@ -2,16 +2,12 @@ import { Box, Container, Typography, Grid, Paper, Chip } from '@mui/material';
 import {
   Create as CreateIcon,
   People as PeopleIcon,
-  TrendingUp as TrendingIcon,
-  AutoAwesome as SparkleIcon,
-  FormatQuote as QuoteIcon,
   Category as CategoryIcon
 } from '@mui/icons-material';
 import logo from '../../../logo1.png';
 import HeroSection from '../../organisms/HeroSection/HeroSection';
 import AuthButtonGroup from '../../molecules/AuthButtonGroup/AuthButtonGroup';
 import { BlogpostCategory } from '../../../types/models/Blogpost';
-import Navbar from "../../organisms/Navbar/Navbar";
 
 export default function HomePage() {
     return (

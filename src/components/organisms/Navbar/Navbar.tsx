@@ -71,15 +71,9 @@ export default function Navbar() {
                     </Button>
 
                     {activeUserHasRole(roles.ADMIN) && (
-                        <>
-                            <Button component={Link} to="/admin" sx={redirectButtonStyles}>
-                                Admin Overview
-                            </Button>
-
-                            <Button component={Link} to="/users" sx={redirectButtonStyles}>
-                                Users
-                            </Button>
-                        </>
+                        <Button component={Link} to="/admin" sx={redirectButtonStyles}>
+                            Admin Overview
+                        </Button>
                     )}
 
                     {isLoggedIn ? (
