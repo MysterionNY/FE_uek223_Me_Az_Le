@@ -12,6 +12,8 @@ import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
+import Box from "@mui/material/Box";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string(),
@@ -51,6 +53,15 @@ const Login = () => {
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
+        <Box className="registerHeader" sx={{ mb: 1 }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            variant="text"
+            onClick={() => navigate('/')}
+          >
+            Zurück
+          </Button>
+        </Box>
         <Grid>
           <h2>Sign In</h2>
           <p>Default login:</p>
@@ -105,6 +116,7 @@ const Login = () => {
                 type='submit'
                 color='primary'
                 variant='contained'
+                id='sign-in'
                 style={btnstyle}
                 fullWidth
               >
@@ -113,13 +125,6 @@ const Login = () => {
             </Form>
           )}
         </Formik>
-        <Typography>
-          <Link href='#'>Forgot password ?</Link>
-        </Typography>
-        <Typography>
-          {' '}
-          Do you have an account ?<Link href='#'>Sign Up</Link>
-        </Typography>
       </Paper>
     </Grid>
   );

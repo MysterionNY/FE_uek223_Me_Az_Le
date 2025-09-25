@@ -1,5 +1,5 @@
 import api from '../config/Api';
-import { User } from '../types/models/User.model';
+import {RegisterUser, User} from '../types/models/User.model';
 
 const UserService = {
   getUser: async (userID: string): Promise<User> => {
@@ -8,13 +8,23 @@ const UserService = {
   },
 
   updateUser: (user: User) => {
-    return api.put(`/user/${user.id}`, user);
+    // Backend expects UserDTO without id field
+    // The backend will handle preserving password and blogposts
+    const { id, ...userDTO } = user;
+
+    console.log('Updating user with ID:', id);
+    console.log('Sending DTO:', userDTO);
+    return api.put(`/user/${id}`, userDTO);
   },
 
   addUser: (user: User) => {
     return api.post('/user/registerUser', user).then((res) => {
       return res.data;
     });
+  },
+
+  registerUser: (user: RegisterUser) => {
+    return api.post(`/user/register`, user);
   },
 
   getAllUsers: () => {

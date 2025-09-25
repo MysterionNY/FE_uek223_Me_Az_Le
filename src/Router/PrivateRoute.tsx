@@ -5,6 +5,8 @@ import ActiveUserContext from '../Contexts/ActiveUserContext';
 import AuthorityService from '../Services/AuthorityService';
 import { Button } from '@mui/material';
 import authorities from '../config/Authorities';
+import PageLayout from "../components/other/PageLayout/PageLayout"; // or wherever it lives
+
 
 interface Props {
   element: React.ReactElement;
@@ -42,11 +44,10 @@ const PrivateRoute: React.FC<Props> = ({
   };
   /**
    * If the user is not logged in call activeUserContext.logout, which destroys
-   * all locally saved user data and redirects to /login.
+   * all locally saved user data and redirects to /.
    */
   if (!isLoggedIn()) {
-    activeUserContext.logout();
-    return <Navigate to='/login' replace={true} />;
+    return <Navigate to='/' replace={true} />;
   }
   /**
    * Check if the active user has at least 1 of the needed authorities.
@@ -65,12 +66,11 @@ const PrivateRoute: React.FC<Props> = ({
   }
 
   // All checks passed
-  return (
-    //Pagelayout puts the Navigation, Menu etc. around the component
-    <div>
-      <Button onClick={activeUserContext.logout}>Logout</Button>
-      {RouteComponent}
-    </div>
-  );
+    return (
+        <PageLayout>
+            {RouteComponent}
+        </PageLayout>
+    );
+
 };
 export default PrivateRoute;
