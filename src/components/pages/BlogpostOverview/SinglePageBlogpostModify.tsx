@@ -104,7 +104,7 @@ export default function SinglePageBlogpostModify({
                 {status && <Typography variant="body2" color="error">{status}</Typography>}
 
                 <Box sx={styles.footer}>
-                  <Button type="button" variant="contained" sx={styles.cancel} onClick={() => navigate('/')} disabled={isSubmitting}>
+                  <Button type="button" variant="contained" sx={styles.cancel} id='cancel-button' onClick={() => navigate('/')} disabled={isSubmitting}>
                     Cancel
                   </Button>
                   <Button type="submit" variant="contained" sx={styles.save} id='save-button' disabled={isSubmitting || loading}>

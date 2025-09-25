@@ -32,7 +32,6 @@ const UserForm = ({ user, submitActionHandler }: UserProps) => {
   });
 
   return (
-    <>
       <form onSubmit={formik.handleSubmit}>
         <Box sx={{ paddingTop: '15px' }}>
           <TextField
@@ -98,7 +97,6 @@ const UserForm = ({ user, submitActionHandler }: UserProps) => {
           </Button>
         </div>
       </form>
-    </>
   );
 };
 

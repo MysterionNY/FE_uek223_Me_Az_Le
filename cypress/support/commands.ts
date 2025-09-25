@@ -24,9 +24,9 @@ Cypress.Commands.addAll({
     },
 
     logout: () => {
-        cy.intercept("GET", "/logout").as("logout");
         cy.wait(2000);
-        cy.get("#logout").first().click();
+        cy.get("#logout").click();
+        cy.wait(2000);
     },
 
     getElement: (dataCY: string, shouldBeVisible = true) => {
