@@ -107,7 +107,7 @@ export default function SinglePageBlogpostModify({
                   <Button type="button" variant="contained" sx={styles.cancel} onClick={() => navigate('/')} disabled={isSubmitting}>
                     Cancel
                   </Button>
-                  <Button type="submit" variant="contained" sx={styles.save} disabled={isSubmitting || loading}>
+                  <Button type="submit" variant="contained" sx={styles.save} id='save-button' disabled={isSubmitting || loading}>
                     {mode === 'create' ? 'Save' : 'Update'}
                   </Button>
                 </Box>
