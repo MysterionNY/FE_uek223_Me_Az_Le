@@ -141,12 +141,14 @@ export default function SinglePageBlogpost() {
                 variant="contained"
                 sx={styles.delBtn}
                 onClick={onDelete}
+                id='delete-post'
                 disabled={deleting}
               >
                 Delete
               </Button>
               <Button
                 variant="contained"
+                id='edit-post'
                 sx={styles.editBtn}
                 onClick={() => navigate(`/blogpost/edit/${post.id}`)}
               >

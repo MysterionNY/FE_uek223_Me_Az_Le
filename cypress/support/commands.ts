@@ -1,45 +1,55 @@
-// / <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
+import { Interception } from "cypress/types/net-stubbing";
+import auth from "../fixtures/auth.json";
 
-// YOU CAN ADD YOUR CUSTOM CYPRESS FUNCTIONS HERE
+let LOCAL_STORAGE_MEMORY: { [key: string]: string } = {};
 
+Cypress.Commands.addAll({
+    saveLocalStorage: () =>
+        Object.keys(localStorage).forEach(
+            (key: string) => (LOCAL_STORAGE_MEMORY[key] = localStorage[key])
+        ),
 
-// // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// // -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// // -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// // -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+    restoreLocalStorage: () =>
+        Object.keys(LOCAL_STORAGE_MEMORY).forEach((key: string) =>
+            localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key])
+        ),
 
+    login: (email: string = auth.admin.email, password: string = auth.admin.password) => {
+        cy.intercept("POST", "/login").as("login");
 
-// IF YOU ADD CUSTOM COMMANDS ABOVE, UNCOMMENT THIS DECLARATION AND ADD tYPE DEFINITION FOR YOUR FUNCTION
+        cy.visit("/login");
+        cy.get('#email').type(email);
+        cy.get('#password').type(password);
+        cy.get("#sign-in").click();
+    },
 
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+    logout: () => {
+        cy.wait(2000);
+        cy.get("#logout").click();
+        cy.wait(2000);
+    },
 
-export {};
+    getElement: (dataCY: string, shouldBeVisible = true) => {
+        const element = cy.get(`[data-cy="${dataCY}"]`);
+
+        if (shouldBeVisible) element.scrollIntoView().should("be.visible");
+
+        return element;
+    },
+});
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            saveLocalStorage(): void;
+
+            restoreLocalStorage(): void;
+
+            login(email?: string, password?: string): Chainable<Interception>;
+
+            logout(): Chainable<Interception>;
+
+            getElement(dataCY: string, shouldBeVisible?: boolean): Chainable<JQuery<HTMLElement>>;
+        }
+    }
+}

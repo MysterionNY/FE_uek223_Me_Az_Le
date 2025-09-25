@@ -83,11 +83,11 @@ export default function Navbar() {
                     )}
 
                     {isLoggedIn ? (
-                      <Button onClick={handleLogout} sx={redirectButtonStyles}>
+                      <Button onClick={handleLogout} sx={redirectButtonStyles} id='logout'>
                           Log Out
                       </Button>
                     ) : (
-                      <Button onClick={handleLogin} sx={redirectButtonStyles}>
+                      <Button onClick={handleLogin} sx={redirectButtonStyles} id='logout'>
                           Log In
                       </Button>
                     )}

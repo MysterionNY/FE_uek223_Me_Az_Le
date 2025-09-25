@@ -207,6 +207,7 @@ const BlogpostOverview: React.FC = () => {
               variant="outlined"
               placeholder="Search by title, content, or author..."
               value={searchTerm}
+              id='search-bar'
               onChange={(e) => setSearchTerm(e.target.value)}
               InputProps={{
                 startAdornment: (
