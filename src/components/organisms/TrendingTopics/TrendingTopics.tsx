@@ -10,11 +10,13 @@ export interface TrendingTopic {
 interface TrendingTopicsProps {
   topics: TrendingTopic[];
   title?: string;
+  onTopicClick?: (topicName: string) => void;
 }
 
 const TrendingTopics: React.FC<TrendingTopicsProps> = ({
   topics,
-  title = 'Trending Topics'
+  title = 'Trending Topics',
+  onTopicClick
 }) => {
 
   return (
@@ -29,13 +31,15 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({
       {topics.map((topic, index) => (
         <Box
           key={index}
+          onClick={() => onTopicClick && onTopicClick(topic.name)}
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             py: 1.5,
+            cursor: onTopicClick ? 'pointer' : 'default',
             '&:hover': {
-              bgcolor: 'rgba(0,0,0,0.02)'
+              bgcolor: onTopicClick ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.02)'
             }
           }}
         >
