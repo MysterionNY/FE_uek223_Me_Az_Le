@@ -8,7 +8,13 @@ const UserService = {
   },
 
   updateUser: (user: User) => {
-    return api.put(`/user/${user.id}`, user);
+    // Backend expects UserDTO without id field
+    // The backend will handle preserving password and blogposts
+    const { id, ...userDTO } = user;
+
+    console.log('Updating user with ID:', id);
+    console.log('Sending DTO:', userDTO);
+    return api.put(`/user/${id}`, userDTO);
   },
 
   addUser: (user: User) => {
