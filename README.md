@@ -30,7 +30,8 @@ Ebenfalls gibt es die Möglichkeit, alle Blogposts eines Users ansehen zu könne
 ## Durchlauf (Applikation Start)
 
 **Zu Beginn**: die Erstellung des Docker-Containers und das Starten des Backends.
-(siehe Backend-README)
+(siehe [Backend-README](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main))
+
 
 
 In Webstorm, sobald der Docker-Container gestartet wurde und das Backend läuft:
