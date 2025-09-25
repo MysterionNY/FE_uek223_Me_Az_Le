@@ -40,12 +40,12 @@ Endpoints | Pfad                          | Frontend Endpoint                   
 GET      | /blogpost/{blogpostId}         | https://localhost:3000/blogposts/{{blogpostId}}                        | UC 4
 GET      | /blogpost/author/{authorId}    | https://localhost:3000/author/{{authorId}}                             | UC 4
 GET      | /blogpost                      | https://localhost:3000/blogposts                                       | UC 4
-POST     | /blogpost                      | https://localhost:3000/blogposts/create                                | UC 1 / UC 5 / UC 3
-PUT      | /blogpost/{blogpostId}         | https://localhost:3000/blogposts/edit                                  | UC 2 / UC 5 / UC 3
+POST     | /blogpost                      | https://localhost:3000/blogpost/create                                 | UC 1 / UC 5 / UC 3
+PUT      | /blogpost/{blogpostId}         | https://localhost:3000/blogpost/edit                                   | UC 2 / UC 5 / UC 3
 DELETE   | /blogpost/{blogpostId}         | Nicht spezifisch definiert, kann von mehreren Orten aufgerufen werden  | UC 2 / UC 5 / UC 3
 GET      | -                              | https://localhost:3000/adminoverview                                   | Allgemeine Anforderung Admin Page
-Post     | /user/registerUser             | https://localhost:3000/adminoverview/createuser                        | Allgemeine Anforderung Admin Page
-Put      | /user/{userId}                 | https://localhost:3000/adminoverview/edituser                          | Allgemeine Anforderung Admin Page
+POST     | /user/registerUser             | https://localhost:3000/adminoverview/createuser                        | Allgemeine Anforderung Admin Page
+PUT      | /user/{userId}                 | https://localhost:3000/adminoverview/edituser                          | Allgemeine Anforderung Admin Page
 
 
 ## User Journey
