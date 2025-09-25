@@ -18,7 +18,7 @@ export default function HomePage() {
       <>
         {/* NAVBAR PLACEHOLDER - Add your navigation component here */}
 
-        <Navbar />
+
         <HeroSection
           title="OurSpace Blog"
           subtitle="Discover fascinating stories, share your thoughts, and connect with a community of creative minds."

@@ -112,8 +112,6 @@ export default function LoggedInHomePage() {
 
   return (
     <>
-      <Navbar />
-      {/* Example: <NavBar /> */}
 
       {/* Welcome Section without Stats */}
       <WelcomeSection
