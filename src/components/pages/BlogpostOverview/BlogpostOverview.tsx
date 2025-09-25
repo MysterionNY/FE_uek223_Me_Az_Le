@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import {
   Container,
   Grid,
@@ -16,42 +16,98 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Avatar
+  Avatar,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  InputAdornment,
+  Pagination,
+  Stack
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import ActiveUserContext from '../../../Contexts/ActiveUserContext';
 import BlogpostService from '../../../Services/BlogpostService';
-import { Blogpost } from '../../../types/models/Blogpost';
+import { Blogpost, BlogpostCategory } from '../../../types/models/Blogpost';
 import roles from '../../../config/Roles';
 import DeleteButton from '../../atoms/DeleteButton/DeleteButton';
 import UpdateButton from '../../atoms/UpdateButton/UpdateButton';
 
+const POSTS_PER_PAGE = 9;
+
 const BlogpostOverview: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { activeUserHasRole } = useContext(ActiveUserContext);
   const [blogposts, setBlogposts] = useState<Blogpost[]>([]);
+  const [totalPosts, setTotalPosts] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState<string | null>(null);
 
+  // Get category from URL params
+  const categoryFromUrl = searchParams.get('category') || 'ALL';
+
+  // Filter states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryFromUrl);
+  const [currentPage, setCurrentPage] = useState(1);
+
+
+  // Update category when URL param changes
+  useEffect(() => {
+    setSelectedCategory(categoryFromUrl);
+    setCurrentPage(1); // Reset to first page when category changes
+  }, [categoryFromUrl]);
 
   useEffect(() => {
     fetchBlogposts();
-  }, []);
+  }, [currentPage, selectedCategory]); // Refetch when page or category changes
 
   const fetchBlogposts = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await BlogpostService.getAllBlogposts();
-      // Sort by most recent first
-      const sortedData = data.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return dateB - dateA;
-      });
-      setBlogposts(sortedData);
+
+      // Use backend pagination - page index is 0-based for backend
+      const pageIndex = currentPage - 1;
+      const data = await BlogpostService.getAllBlogpostsPaginated(
+        pageIndex,
+        POSTS_PER_PAGE,
+        selectedCategory
+      );
+
+      // For search, we need to fetch all and filter client-side
+      // This is a limitation since backend doesn't support text search
+      let filteredData = data;
+      if (searchTerm) {
+        // Fetch all posts for searching
+        const allData = await BlogpostService.getAllBlogposts();
+        filteredData = allData.filter(post =>
+          post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          post.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          `${post.author?.firstName} ${post.author?.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        // Apply pagination to search results
+        const startIdx = pageIndex * POSTS_PER_PAGE;
+        const endIdx = startIdx + POSTS_PER_PAGE;
+        filteredData = filteredData.slice(startIdx, endIdx);
+        setTotalPosts(filteredData.length);
+      } else {
+        // Calculate total based on category
+        // Since backend doesn't return total, fetch all to get count
+        const allData = await BlogpostService.getAllBlogposts();
+        const categoryFiltered = selectedCategory === 'ALL'
+          ? allData
+          : allData.filter(p => p.category === selectedCategory);
+        setTotalPosts(categoryFiltered.length);
+      }
+
+      setBlogposts(filteredData);
     } catch (err: any) {
       console.error('Error fetching blogposts:', err);
       setError(err.response?.data?.message || 'Failed to load blogposts');
@@ -105,6 +161,26 @@ const BlogpostOverview: React.FC = () => {
     return category.charAt(0) + category.slice(1).toLowerCase();
   };
 
+  // Calculate total pages based on total posts
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+
+  // Reset to first page when search term changes
+  useEffect(() => {
+    if (searchTerm !== '') {
+      setCurrentPage(1);
+    }
+  }, [searchTerm]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+    // Scroll to top of container
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
   if (loading) {
     return (
       <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
@@ -130,11 +206,75 @@ const BlogpostOverview: React.FC = () => {
         All Blogposts
       </Typography>
 
+      {/* Filters Section */}
+      <Box sx={{ mb: 4 }}>
+        <Grid container spacing={2} alignItems="center">
+          {/* Search Field */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Search by title, content, or author..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: searchTerm && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      onClick={handleClearSearch}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
+
+          {/* Category Filter */}
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Category</InputLabel>
+              <Select
+                value={selectedCategory}
+                label="Category"
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <MenuItem value="ALL">All Categories</MenuItem>
+                {Object.values(BlogpostCategory).map((category) => (
+                  <MenuItem key={category} value={category}>
+                    {formatCategory(category)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          {/* Results Count */}
+          <Grid item xs={12} md={2}>
+            <Typography variant="body1" color="text.secondary" textAlign="center">
+              {totalPosts} {totalPosts === 1 ? 'post' : 'posts'} found
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+
       {blogposts.length === 0 ? (
-        <Alert severity="info">No blogposts available yet.</Alert>
+        <Alert severity="info">
+          {searchTerm || selectedCategory !== 'ALL'
+            ? 'No blogposts found matching your filters.'
+            : 'No blogposts available yet.'}
+        </Alert>
       ) : (
-        <Grid container spacing={3} justifyContent="center">
-          {blogposts.map((post) => (
+        <>
+          <Grid container spacing={3} justifyContent="center">
+            {blogposts.map((post) => (
             <Grid item xs={12} sm={6} md={4} key={post.id}>
               <Card
                 onClick={() => handleCardClick(post.id)}
@@ -207,8 +347,24 @@ const BlogpostOverview: React.FC = () => {
                 </CardContent>
               </Card>
             </Grid>
-          ))}
-        </Grid>
+            ))}
+          </Grid>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+                size="large"
+                showFirstButton
+                showLastButton
+              />
+            </Box>
+          )}
+        </>
       )}
 
       {/* Delete Confirmation Dialog */}
