@@ -39,7 +39,6 @@ describe(`Blogpost tests`, () => {
         cy.login(auth.user.email, auth.user.password);
         cy.wait(3000);
         cy.visit("/blogposts");
-        cy.get('#search-bar').click().type("Das ist ein Titel");
         cy.get(':nth-child(1) > .MuiPaper-root > .MuiCardContent-root').should('be.visible');
     });
 
@@ -47,7 +46,6 @@ describe(`Blogpost tests`, () => {
         cy.login(auth.user2.email, auth.user2.password);
         cy.wait(3000);
         cy.visit("/blogposts");
-        cy.get('#search-bar').click().type("Das ist ein Titel");
         cy.get(':nth-child(1) > .MuiPaper-root > .MuiCardContent-root').click();
         cy.get('#edit-post').should('not.exist');
     });
@@ -56,10 +54,9 @@ describe(`Blogpost tests`, () => {
         cy.login(auth.admin.email, auth.admin.password);
         cy.wait(3000);
         cy.visit("/blogposts");
-        cy.get('#search-bar').click().type("Das ist ein Titel");
         cy.get(':nth-child(1) > .MuiPaper-root > .MuiCardContent-root').click();
         cy.get('#edit-post').click();
-        cy.get('#title').type("Das ist der neue Titel");
+        cy.get('#title').clear().type("Das ist der neue Titel");
         cy.get('#save-button').click();
     })
 })
