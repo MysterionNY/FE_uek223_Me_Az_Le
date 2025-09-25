@@ -10,9 +10,13 @@ Alle User, inklusive Gäste, sollen Blogposts lesen können – mit Pagination u
 Das System muss also auch dafür sorgen, dass nur der Autor oder ein Admin Änderungen an einem Post durchführen darf.
 Ebenfalls gibt es die Möglichkeit, alle Blogposts eines Users ansehen zu können.
 
-## Durchlauf
+## Durchlauf (Applikation Start)
 
-In der IDE:
+**Zu Beginn**: die Erstellung des Docker-Containers und das Starten des Backends.
+(siehe Backend-README)
+
+
+In Webstorm, sobald der Docker-Container gestartet wurde und das Backend läuft:
 
 ```bash
 yarn start
@@ -29,6 +33,14 @@ Homepage:
 
 Login:
 `http://localhost:3000/login`
+
+---
+
+## Login Daten
+Email              | Passwort              | Rolle | 
+----------------   | --------------------- | ----  | 
+admin@example.com  | 1234                  | Admin |  
+user@example.com   | 1234                  | User  |  
 
 ---
 
