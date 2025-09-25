@@ -56,10 +56,7 @@ const Router = () => {
       />
       <Route
         path={'/blogpost/:blogpostId'} element={
-        <PrivateRoute
-          requiredAuths={[]}
-          element={<SinglePageBlogpost />}
-        ></PrivateRoute>
+        <PageLayout><SinglePageBlogpost /></PageLayout>
       }
       />
       <Route
