@@ -80,6 +80,10 @@ export default function LoggedInHomePage() {
       .slice(0, 5);
   };
 
+  const handleTopicClick = (topicName: string) => {
+    navigate(`/blogposts?category=${topicName}`);
+  };
+
   if (loading) {
     return (
       <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
@@ -158,7 +162,10 @@ export default function LoggedInHomePage() {
           <Grid item xs={12} md={4}>
             {/* Trending Topics */}
             {getTrendingTopics().length > 0 && (
-              <TrendingTopics topics={getTrendingTopics()} />
+              <TrendingTopics
+                topics={getTrendingTopics()}
+                onTopicClick={handleTopicClick}
+              />
             )}
 
             {/* Quick Actions */}
