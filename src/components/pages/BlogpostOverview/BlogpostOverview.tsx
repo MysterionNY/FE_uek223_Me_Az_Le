@@ -41,8 +41,7 @@ const BlogpostOverview: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { activeUserHasRole } = useContext(ActiveUserContext);
-  const [blogposts, setBlogposts] = useState<Blogpost[]>([]);
-  const [totalPosts, setTotalPosts] = useState(0);
+  const [allBlogposts, setAllBlogposts] = useState<Blogpost[]>([]); // Store all posts
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -63,51 +62,17 @@ const BlogpostOverview: React.FC = () => {
     setCurrentPage(1); // Reset to first page when category changes
   }, [categoryFromUrl]);
 
+  // Fetch all posts once on mount
   useEffect(() => {
-    fetchBlogposts();
-  }, [currentPage, selectedCategory]); // Refetch when page or category changes
+    fetchAllBlogposts();
+  }, []);
 
-  const fetchBlogposts = async () => {
+  const fetchAllBlogposts = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      // Use backend pagination - page index is 0-based for backend
-      const pageIndex = currentPage - 1;
-      const data = await BlogpostService.getAllBlogpostsPaginated(
-        pageIndex,
-        POSTS_PER_PAGE,
-        selectedCategory
-      );
-
-      // For search, we need to fetch all and filter client-side
-      // This is a limitation since backend doesn't support text search
-      let filteredData = data;
-      if (searchTerm) {
-        // Fetch all posts for searching
-        const allData = await BlogpostService.getAllBlogposts();
-        filteredData = allData.filter(post =>
-          post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          `${post.author?.firstName} ${post.author?.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
-        // Apply pagination to search results
-        const startIdx = pageIndex * POSTS_PER_PAGE;
-        const endIdx = startIdx + POSTS_PER_PAGE;
-        filteredData = filteredData.slice(startIdx, endIdx);
-        setTotalPosts(filteredData.length);
-      } else {
-        // Calculate total based on category
-        // Since backend doesn't return total, fetch all to get count
-        const allData = await BlogpostService.getAllBlogposts();
-        const categoryFiltered = selectedCategory === 'ALL'
-          ? allData
-          : allData.filter(p => p.category === selectedCategory);
-        setTotalPosts(categoryFiltered.length);
-      }
-
-      setBlogposts(filteredData);
+      const data = await BlogpostService.getAllBlogposts();
+      setAllBlogposts(data);
     } catch (err: any) {
       console.error('Error fetching blogposts:', err);
       setError(err.response?.data?.message || 'Failed to load blogposts');
@@ -115,6 +80,34 @@ const BlogpostOverview: React.FC = () => {
       setLoading(false);
     }
   };
+
+  // Filter and paginate posts based on current filters
+  const filteredPosts = useMemo(() => {
+    let filtered = allBlogposts;
+
+    // Apply category filter
+    if (selectedCategory !== 'ALL') {
+      filtered = filtered.filter(post => post.category === selectedCategory);
+    }
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(post =>
+        post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.text?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        `${post.author?.firstName} ${post.author?.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [allBlogposts, selectedCategory, searchTerm]);
+
+  // Paginate the filtered results
+  const paginatedPosts = useMemo(() => {
+    const startIdx = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIdx = startIdx + POSTS_PER_PAGE;
+    return filteredPosts.slice(startIdx, endIdx);
+  }, [filteredPosts, currentPage]);
 
   const handleCardClick = (blogpostId: string) => {
     navigate(`/blogpost/${blogpostId}`);
@@ -135,7 +128,7 @@ const BlogpostOverview: React.FC = () => {
     if (postToDelete) {
       try {
         await BlogpostService.deleteBlogpost(postToDelete);
-        await fetchBlogposts(); // Refresh the list
+        await fetchAllBlogposts(); // Refresh the list
         setDeleteDialogOpen(false);
         setPostToDelete(null);
       } catch (err: any) {
@@ -161,15 +154,13 @@ const BlogpostOverview: React.FC = () => {
     return category.charAt(0) + category.slice(1).toLowerCase();
   };
 
-  // Calculate total pages based on total posts
-  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  // Calculate total pages based on filtered posts
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
-  // Reset to first page when search term changes
+  // Reset to first page when filters change
   useEffect(() => {
-    if (searchTerm !== '') {
-      setCurrentPage(1);
-    }
-  }, [searchTerm]);
+    setCurrentPage(1);
+  }, [selectedCategory, searchTerm]);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
@@ -193,7 +184,7 @@ const BlogpostOverview: React.FC = () => {
     return (
       <Container sx={{ mt: 4 }}>
         <Alert severity="error">{error}</Alert>
-        <Button onClick={fetchBlogposts} sx={{ mt: 2 }}>
+        <Button onClick={fetchAllBlogposts} sx={{ mt: 2 }}>
           Retry
         </Button>
       </Container>
@@ -259,13 +250,13 @@ const BlogpostOverview: React.FC = () => {
           {/* Results Count */}
           <Grid item xs={12} md={2}>
             <Typography variant="body1" color="text.secondary" textAlign="center">
-              {totalPosts} {totalPosts === 1 ? 'post' : 'posts'} found
+              {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'} found
             </Typography>
           </Grid>
         </Grid>
       </Box>
 
-      {blogposts.length === 0 ? (
+      {paginatedPosts.length === 0 ? (
         <Alert severity="info">
           {searchTerm || selectedCategory !== 'ALL'
             ? 'No blogposts found matching your filters.'
@@ -274,7 +265,7 @@ const BlogpostOverview: React.FC = () => {
       ) : (
         <>
           <Grid container spacing={3} justifyContent="center">
-            {blogposts.map((post) => (
+            {paginatedPosts.map((post) => (
             <Grid item xs={12} sm={6} md={4} key={post.id}>
               <Card
                 onClick={() => handleCardClick(post.id)}
