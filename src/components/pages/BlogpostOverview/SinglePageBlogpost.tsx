@@ -105,7 +105,12 @@ export default function SinglePageBlogpost() {
               cursor: post.author?.id ? 'pointer' : 'default',
               '&:hover': { textDecoration: post.author?.id ? 'underline' : 'none' },
             }}
-            onClick={() => post.author?.id && navigate(`/blogpost/author/${post.author.id}`)}
+            onClick={() => {
+                if (post.author?.id) {
+                    navigate(`/blogposts/author/${post.author.id}`);
+                }
+            }}
+
           >
             {authorName}
           </Typography>

@@ -16,8 +16,6 @@ import Navbar from "../../organisms/Navbar/Navbar";
 export default function HomePage() {
     return (
       <>
-        {/* NAVBAR PLACEHOLDER - Add your navigation component here */}
-
 
         <HeroSection
           title="OurSpace Blog"

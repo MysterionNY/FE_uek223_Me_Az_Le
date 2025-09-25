@@ -15,7 +15,6 @@ import {
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import React, { useContext } from "react";
 import roles from "../../../config/Roles";
-import activeUserContext from "../../../Contexts/ActiveUserContext";
 
 
 export default function Navbar() {
@@ -60,7 +59,7 @@ export default function Navbar() {
                     {activeUserHasRole(roles.USER) && user?.id && (
                       <Button
                         component={Link}
-                        to={`/blogpost/author/${user.id}`}
+                        to={`/blogposts/author/${user.id}`}
                         sx={redirectButtonStyles}
                       >
                           Your Posts

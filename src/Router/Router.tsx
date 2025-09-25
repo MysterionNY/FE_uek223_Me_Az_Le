@@ -13,6 +13,8 @@ import UserPage from '../components/pages/UserPage/UserPage';
 import authorities from '../config/Authorities';
 import ActiveUserContext from '../Contexts/ActiveUserContext';
 import PageLayout from "../components/other/PageLayout/PageLayout";
+import BlogpostsByAuthor from '../components/pages/BlogpostsByAuthor/BlogpostsByAuthor';
+
 
 /**
  * Router component renders a route switch with all available pages
@@ -31,6 +33,7 @@ const Router = () => {
       <Route path={'/blogposts'} element={<PageLayout><BlogpostOverview /></PageLayout>} />
       <Route path='/login' element={<PageLayout><LoginPage /></PageLayout>} />
       <Route path='/register' element={<PageLayout><RegisterPage /></PageLayout>} />
+      <Route path='/blogposts/author/:authorId' element={<PageLayout><BlogpostsByAuthor /></PageLayout>} />
 
       <Route
         path={'/users'}
@@ -75,7 +78,9 @@ const Router = () => {
           ></PrivateRoute>
       }
         />
-      <Route path='*' element={<PageLayout><div>Not Found</div></PageLayout>} />
+
+
+        <Route path='*' element={<PageLayout><div>Not Found</div></PageLayout>} />
     </Routes>
   );
 };
