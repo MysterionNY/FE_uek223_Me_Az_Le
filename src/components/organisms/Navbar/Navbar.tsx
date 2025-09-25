@@ -36,8 +36,12 @@ export default function Navbar() {
     return (
         <AppBar sx={appBarStyles}>
             <Toolbar>
-                <Typography sx={titleTextStyles}>
-                    Ourspace
+                <Typography
+                  component={Link}
+                  to="/"
+                  sx={{ ...titleTextStyles, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                >
+                    OurSpace
                 </Typography>
 
                 <Box sx={navbarButtonsBoxStyles}>
